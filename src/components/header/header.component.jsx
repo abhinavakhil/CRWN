@@ -6,7 +6,10 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 
 import "./header.styles.scss";
 
-const Header = () => {
+//firebase
+import { auth } from "../../firebase/firebase.utils";
+
+const Header = ({currentUser}) => {
     return(
         <div className="header">
           <Link to="/" className="logo-container">
@@ -15,10 +18,17 @@ const Header = () => {
           <div className="options">
               <Link to="/shop" className="option">Shop</Link>
               <Link to="/shop" className="option">Contact</Link>
-              <Link to="/signin" className="option">Login</Link>
+              {
+                currentUser ? 
+                (<div className="option" onClick={()=> auth.signOut()}>{currentUser.displayName}/SIGN OUT</div>) 
+                : <Link to="/signin" className="option">Login</Link>
+              }
           </div>
         </div>
     )
 }
 
 export default Header;
+
+//onClick={()=> auth.signOut()}
+// Anonymous fn- ()=> auth.signOut()
